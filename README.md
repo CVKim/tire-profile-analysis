@@ -58,7 +58,7 @@ Each value corresponds to a sensor measurement sampled along the profile.
 
 tire-profile-analysis
 ├── data
-│   └── sample_profile.txt
+│   └── sample_profile.csv
 ├── src
 │   ├── preprocessing.py
 │   ├── feature_detection.py
