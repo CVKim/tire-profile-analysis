@@ -92,13 +92,13 @@ pip install -r requirements.txt
 Run the profile analysis pipeline:
 
 ```bash
-python src/main.py --input data/sample_profile.txt
+python src/main.py --input data/sample_profile.csv
 ```
 
 Example:
 
 ```bash
-python src/main.py --input data/sample_profile.txt --output results/
+python src/main.py --input data/sample_profile.csv --output results/
 ```
 
 ---
