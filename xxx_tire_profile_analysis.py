@@ -90,18 +90,26 @@ def analyze_tire_full(filename, ax, config):
 
     # [4] OD & ID 측정 (바닥 구간 제외하고 타이어 물체 끝단만 잡기)
     try:
-        # OD: 타이어 물체가 확실히 존재하는 구간 (TIRE_START_THR 이상인 첫 지점과 마지막 지점)
-        tire_indices = np.where(processed_y >= config["TIRE_START_THR"])[0]
-        out_l, out_r = tire_indices[0], tire_indices[-1]
+        # OD: 외곽 노이즈를 피하기 위해 타이어 양쪽 최고점(l_p, r_p)에서 바깥쪽으로 탐색
+        out_l = l_p
+        while out_l > 0 and processed_y[out_l] >= config["TIRE_START_THR"]:
+            out_l -= 1
+            
+        out_r = r_p
+        while out_r < data_len - 1 and processed_y[out_r] >= config["TIRE_START_THR"]:
+            out_r += 1
+            
         val_od = out_r - out_l
         
         # ID: 두 덩어리 사이 내측 간격 (0점에 가까운 구간)
         temp_in_l = np.where(processed_y[l_p:mid] < config["TIRE_START_THR"])[0]
         in_l = l_p + temp_in_l[0] if len(temp_in_l) > 0 else mid
+        
         temp_in_r = np.where(processed_y[mid:r_p] < config["TIRE_START_THR"])[0]
         in_r = mid + temp_in_r[-1] if len(temp_in_r) > 0 else mid
+        
         val_id = in_r - in_l
-    except:
+    except Exception as e:
         val_od, val_id, out_l, out_r, in_l, in_r = 0, 0, 0, 0, mid, mid
 
     res = {

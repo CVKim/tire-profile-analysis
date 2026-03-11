@@ -1,7 +1,14 @@
+# IDE / Editor
+.vscode/
+.idea/
+
+# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Data & Logs
 *.csv
 *.png
 *.jpg
